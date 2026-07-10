@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: taxi-prod
+data:
+  # Application Configurations
+  spring.application.name: rudrabannataxiservices
+  server.port: "8080"
+
+  # Logging
+  APP_LOG_LEVEL: INFO
+  SHOW_SQL: "false"
+
+  # CORS Settings
+  FRONTEND_URL: http://localhost:3000
+
+  # File Upload
+  spring.servlet.multipart.max-file-size: 20MB
+  spring.servlet.multipart.max-request-size: 50MB
+  spring.servlet.multipart.enabled: "true"
+  file.upload.directory: /app/uploads
+
+  # Hibernate
+  spring.jpa.hibernate.ddl-auto: update
+  spring.jpa.show-sql: "false"
+  spring.jpa.properties.hibernate.format_sql: "true"
+  spring.jpa.open-in-view: "false"
+
+  # Actuator & Prometheus
+  management.endpoints.web.exposure.include: health,info,prometheus,metrics
+  management.endpoint.health.show-details: always
+  management.prometheus.metrics.export.enabled: "true"
