@@ -22,9 +22,7 @@ spec:
     spec:
       containers:
         - name: grafana
-
           image: grafana/grafana:latest
-
           imagePullPolicy: IfNotPresent
 
           ports:
@@ -33,16 +31,27 @@ spec:
 
           env:
             - name: GF_SECURITY_ADMIN_USER
-              value: admin
-
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-secret
+                  key: GF_SECURITY_ADMIN_USER
+                  optional: true
+            
             - name: GF_SECURITY_ADMIN_PASSWORD
-              value: admin123
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-secret
+                  key: GF_SECURITY_ADMIN_PASSWORD
+                  optional: true
+            
+            # Fallback agar secret na ho
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "false"
 
           resources:
             requests:
               cpu: "200m"
               memory: "256Mi"
-
             limits:
               cpu: "500m"
               memory: "512Mi"
@@ -51,7 +60,6 @@ spec:
             httpGet:
               path: /api/health
               port: 3000
-
             initialDelaySeconds: 60
             periodSeconds: 20
 
@@ -59,7 +67,6 @@ spec:
             httpGet:
               path: /api/health
               port: 3000
-
             initialDelaySeconds: 30
             periodSeconds: 10
 
@@ -69,4 +76,5 @@ spec:
 
       volumes:
         - name: grafana-storage
-          emptyDir: {}
+          persistentVolumeClaim:  # 👈 emptyDir se PVC kar diya
+            claimName: grafana-pvc
