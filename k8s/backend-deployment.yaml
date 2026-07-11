@@ -42,7 +42,7 @@ spec:
       containers:
         - name: taxi-backend
           image: rohit261/rudrabannataxiservices:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: http
