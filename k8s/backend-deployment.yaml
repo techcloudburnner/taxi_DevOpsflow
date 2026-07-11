@@ -41,7 +41,7 @@ spec:
               echo "MySQL is ready!"
       containers:
         - name: taxi-backend
-          image: rudrataxi-backend:v1
+          image: rohit261/rudrabannataxiservices:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
