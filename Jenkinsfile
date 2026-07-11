@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "rohit261/rudrabannataxiservices"
         IMAGE_TAG  = "${BUILD_NUMBER}"
-        NAMESPACE  = "taxi-app"
+        NAMESPACE  = "taxi-prod"
     }
 
     options {
